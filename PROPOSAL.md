@@ -4,7 +4,14 @@
 Inflation Time Machine
 
 ### Description of the project
-The "Inflation Time Machine"
+The "Inflation Time Machine". The purpose of this project is to allow a
+user to input a start and end date and a amount. After clicking submit
+this should show the user how much that amount would be worth in the end
+year. Then we also give the option to the user to see how much of some
+item they could purchase with that amount today. Example: I want to see
+how much $10k from 1920 is worth today and I can see that if it is worth
+$20k today then I could buy X-number of Toyota Camry's, Houses,
+Burritos.
 
 ### API
 US Bureau of Labor Statistics (BLS) API (or similar historical CPI data APIs), Congressional Budget Office, Federal Reserve API, and probably a few others that come up if we need them.
@@ -38,7 +45,7 @@ Sub Page Mobile - [https://wireframe.cc/427CNi](https://wireframe.cc/427CNi)
 This will be used for submitting the amount and the year and perhaps a short description of the thing purchased. This will then be sent and used in calculating the value of the asset on the current date
 
 ### What data would you need to store in Local storage for persistence?
-Probably past/recent searches
+Past/recent searches
 
 ### What data will your app need? Is there an API or will you need to build your own dataset in a json file?
 There is a BLS API and we may need another API like the FRED (Fed Reserve) API
