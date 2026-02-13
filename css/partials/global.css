@@ -1,0 +1,12 @@
+body{
+    font-family: var(--old-font-family);
+}
+h1, h2, h3{
+    font-family: var(--old-font-family);
+}
+p{
+    font-family: var(--new-font-family);
+}
+img{
+    max-width: 100%;
+}
