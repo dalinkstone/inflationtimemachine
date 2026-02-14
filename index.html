@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <header>
+        <a href="index.html"><img src="images/inflationtimemachine-logo.png" alt="logo"></a>
+        <nav><a href="subpage1.html">Subpage</a></nav>
+    </header>
+    <main>
+        <section id="graph">
+            <h1>Graph</h1>
+            <img src="images/inflationtime-machine-logo.png" alt="graph">
+        </section>
+
+        <section id="form">
+            <form>
+                    <label for="b_year"><h1>Base Year</h1></label>
+                    <input type="number" id="b_year" name="b_year" min="1960" max="2099">
+                    <label for="amount"><h1>Amount</h1></label>
+                    <input type="number" id="amount" name="amount">
+                    <label for="e_year"><h1>End Year</h1></label>
+                    <input type="number" id="e_year" name="e_year" min="1960" max="2099">
+                    <label for="submit"><h1></h1></label>
+                    <input id="submit" type="submit" value="submit">
+                    
+            </form>
+        </section>
+
+        <section id="recent">
+            <h1>Recent</h1>
+            <div class="lookUp">
+                <p>Year - 1900</p>
+                <p>Amount - $2000</p>
+                <p>End Year - 2000</p>
+            </div>
+            <div class="lookUp">
+                <p>Year - 1959</p>
+                <p>Amount - $199</p>
+                <p>End Year - 2000</p>
+            </div>
+            <div class="lookUp">
+                <p>No recent look up</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div id="topLevel">
+            <img src="images/inflationtimemachine-logo.png" alt="logo">
+            <a href="subpage1.html">Subpage</a>
+            <div class="social">
+                <!--  I copied and pasted from past work in web classes -->
+                <!-- Social media icons provided under CC from https://www.iconfinder.com/AlfredoCreates  -->
+                <a href="#"><img src="images/instagram_icon.svg" alt="instagram icon"></a>
+                <a href="#"><img src="images/youtube_icon.svg" alt="youtube icon"></a>
+                <a href="#"><img src="images/pinterest_icon.svg" alt="pinterest icon"></a>
+            </div>
+        </div>
+        <div id="bottomLevel">
+            <p>&copy 2026 infation time machine. All rights reserved</p>
+            <p>Privacy Policy</p>
+            <p>Teams of Service</p>
+        </div>
+    </footer>
+</body>
+</html>

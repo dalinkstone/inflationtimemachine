@@ -1,0 +1,31 @@
+header{
+    height: 100px;
+    max-width: 100%;
+    color: var(--primary);
+    background-color: var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+}
+header img{
+    max-height: 75px;
+    max-width: 75px;
+    margin-left: 1.5rem;
+    border-radius: 10px;
+   
+}
+header nav a{
+    padding-right: 2rem;
+    text-decoration: none;
+    color: var(--text-on-dark);
+    font-size: 1.5rem;
+    padding-left: 2rem;
+    padding-top: 37px;
+    padding-bottom: 37px;
+}
+header nav a:hover{
+    color: var(--text-on-color);
+    background-color: var(--hover-1);
+}

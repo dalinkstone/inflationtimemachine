@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Quintessential&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');:root{
+    --primary: #003D5B;
+    --secondary: #214F4B;
+    --text-on-color: #483C46;
+    --text-on-dark: #A6A2A2;
+    --hover-1: #566246;
+    --hover-2: #3C6E71;
+    
+    --old-font-family: "Quintessential", serif;
+    --new-font-family: "Tinos", serif;
+    
+
+}
