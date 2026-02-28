@@ -88,7 +88,7 @@ function getInflationAdjusted(amount, startYear, endYear) {
         endYear: endYear,
         startCPI: startCPI,
         endCPI: endCPI,
-        multiplier: Math.round(multiplier * 100) / 100
+        multiplier: Number(multiplier.toFixed(2))
       };
     });
 }
