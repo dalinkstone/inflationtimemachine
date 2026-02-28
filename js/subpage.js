@@ -23,8 +23,18 @@ document.addEventListener("DOMContentLoaded", function () {
   // Populate the results section
   document.getElementById("display-adjusted").textContent =
     "$" + result.adjusted.toLocaleString();
+  // Calculate multiplier from CPI values to handle old localStorage entries
+  // that may not have the multiplier field
+  var multiplier = result.multiplier;
+  if (multiplier === undefined || multiplier === null || isNaN(multiplier)) {
+    if (result.startCPI && result.endCPI) {
+      multiplier = result.endCPI / result.startCPI;
+    } else {
+      multiplier = 0;
+    }
+  }
   document.getElementById("display-multiplier").textContent =
-    result.multiplier + "x";
+    Number(multiplier).toFixed(2) + "x";
 
   // Populate item comparisons
   var items = getItemComparisons(result.adjusted);
