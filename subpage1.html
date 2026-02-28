@@ -6,6 +6,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <script src="js/inflation.js"></script>
+    <script src="js/subpage.js"></script>
 </head>
 <body>
     <header>
@@ -20,27 +22,23 @@
 
         <section id="search">
             <h1>Base Year</h1>
-            <p>1800</p>
+            <p id="display-start-year">—</p>
             <h1>Amount</h1>
-            <p>$4000</p>
+            <p id="display-amount">—</p>
             <h1>End Year</h1>
-            <p>2000</p>
+            <p id="display-end-year">—</p>
         </section>
 
         <section id="end">
             <h1>End Amount</h1>
-            <p>$20000</p>
-            <div class="lookUp">
-                <details class="times" name="items">
-                    <summary>Our time</summary>
-                    <ul class="itemList">
-                        <p>Houses - 1</p>
-                        <p>Mcnuggets - 10000</p>
-                        <p>pizzas - 2000</p>
-                        <p>cars - 6</p>
-                    </ul>
-                </details>
-            </div>
+            <p id="display-adjusted">—</p>
+            <h1>Multiplier</h1>
+            <p id="display-multiplier">—</p>
+            <details class="times" name="items">
+                <summary>What can it buy?</summary>
+                <ul class="itemList" id="display-items">
+                </ul>
+            </details>
         </section>
     </main>
 

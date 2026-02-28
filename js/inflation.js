@@ -148,7 +148,10 @@ function saveSearch(result) {
     startYear: result.startYear,
     endYear: result.endYear,
     original: result.original,
-    adjusted: result.adjusted
+    adjusted: result.adjusted,
+    startCPI: result.startCPI,
+    endCPI: result.endCPI,
+    multiplier: result.multiplier
   });
 
   // Keep only the most recent 3
@@ -219,6 +222,15 @@ function renderRecentSearches() {
     div.appendChild(pAmount);
     div.appendChild(pEnd);
     div.appendChild(pResult);
+
+    // Click handler: save this search as currentResult and go to subpage
+    (function (s) {
+      div.addEventListener("click", function () {
+        localStorage.setItem("currentResult", JSON.stringify(s));
+        window.location.href = "subpage1.html";
+      });
+    })(search);
+
     recentSection.appendChild(div);
   }
 }
@@ -271,27 +283,9 @@ document.addEventListener("DOMContentLoaded", function () {
         saveSearch(result);
         renderRecentSearches();
 
-        // Get item comparisons
-        var items = getItemComparisons(result.adjusted);
-        console.log("Item comparisons:", items);
-
-        // ---------------------------------------------------
-        // TODO: Replace this alert with actual DOM rendering.
-        //
-        // result.original   → the dollar amount entered
-        // result.adjusted   → the inflation-adjusted amount
-        // result.startYear  → base year
-        // result.endYear    → end year
-        // result.multiplier → how many times the dollar changed
-        //
-        // items[]           → array of { item, price, quantity }
-        // ---------------------------------------------------
-
-        alert(
-          "$" + result.original.toLocaleString() + " in " + result.startYear +
-          " = $" + result.adjusted.toLocaleString() + " in " + result.endYear +
-          " (" + result.multiplier + "x)"
-        );
+        // Save full result for subpage display and redirect
+        localStorage.setItem("currentResult", JSON.stringify(result));
+        window.location.href = "subpage1.html";
       })
       .catch(function (err) {
         console.error("Inflation error:", err);
