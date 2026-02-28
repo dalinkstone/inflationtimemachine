@@ -212,9 +212,13 @@ function renderRecentSearches() {
     var pEnd = document.createElement("p");
     pEnd.textContent = "End Year - " + search.endYear;
 
+    var pResult = document.createElement("p");
+    pResult.textContent = "Result - $" + search.adjusted.toLocaleString();
+
     div.appendChild(pYear);
     div.appendChild(pAmount);
     div.appendChild(pEnd);
+    div.appendChild(pResult);
     recentSection.appendChild(div);
   }
 }
