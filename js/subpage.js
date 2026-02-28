@@ -6,6 +6,8 @@
 // and item comparisons (uses getItemComparisons from inflation.js).
 // ============================================================
 
+import { getItemComparisons } from './inflation.js';
+
 document.addEventListener("DOMContentLoaded", function () {
   var raw = localStorage.getItem("currentResult");
   if (!raw) {

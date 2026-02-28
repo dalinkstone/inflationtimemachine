@@ -23,7 +23,7 @@ var cpiData = null;
  *
  * @returns {Promise<Object>} - keys are year strings, values are CPI numbers
  */
-function loadCPIData() {
+export function loadCPIData() {
   if (cpiData !== null) {
     return Promise.resolve(cpiData);
   }
@@ -47,7 +47,7 @@ function loadCPIData() {
 /**
  * adjustedAmount = amount × (endCPI / startCPI)
  */
-function calculateInflation(amount, startCPI, endCPI) {
+export function calculateInflation(amount, startCPI, endCPI) {
   return amount * (endCPI / startCPI);
 }
 
@@ -61,7 +61,7 @@ function calculateInflation(amount, startCPI, endCPI) {
  * @param {number} endYear   - e.g. 2024
  * @returns {Promise<Object>}
  */
-function getInflationAdjusted(amount, startYear, endYear) {
+export function getInflationAdjusted(amount, startYear, endYear) {
   return loadCPIData()
     .then(function (data) {
       var startCPI = data[String(startYear)];
@@ -113,7 +113,7 @@ var itemPrices = {
 /**
  * Given a dollar amount, returns how many of each item you could buy.
  */
-function getItemComparisons(amount) {
+export function getItemComparisons(amount) {
   var results = [];
   var items = Object.keys(itemPrices);
 
@@ -141,7 +141,7 @@ var MAX_RECENT = 3;
 /**
  * Saves a search result to localStorage.
  */
-function saveSearch(result) {
+export function saveSearch(result) {
   var searches = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
   searches.unshift({
@@ -165,7 +165,7 @@ function saveSearch(result) {
 /**
  * Loads recent searches from localStorage.
  */
-function loadRecentSearches() {
+export function loadRecentSearches() {
   return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 }
 
@@ -175,7 +175,7 @@ function loadRecentSearches() {
 /**
  * Updates the #recent section in the DOM with saved searches.
  */
-function renderRecentSearches() {
+export function renderRecentSearches() {
   var recentSection = document.getElementById("recent");
   if (!recentSection) {
     return;
