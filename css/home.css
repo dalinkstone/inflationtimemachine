@@ -25,6 +25,7 @@ main{
     margin: 10px;
     width: 125px;
     padding: 3px;
+    cursor: pointer;
 }
 
 .lookUp:hover{
