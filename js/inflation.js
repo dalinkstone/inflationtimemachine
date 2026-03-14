@@ -94,6 +94,42 @@ export function getInflationAdjusted(amount, startYear, endYear) {
 }
 
 
+// ---- LINE GRAPH ----
+
+/**
+ * Draws a simple line graph on a canvas.
+ * points = [[x, y], [x, y], ...]
+ */
+export function drawLineGraph(canvas, points, yPrefix) {
+  var ctx = canvas.getContext("2d");
+  var w = canvas.width, h = canvas.height;
+  var pad = 50;
+  var minX = points[0][0], maxX = points[points.length - 1][0];
+  var ys = points.map(function (p) { return p[1]; });
+  var minY = Math.min.apply(null, ys), maxY = Math.max.apply(null, ys);
+  if (maxY === minY) maxY = minY + 1;
+  function sx(x) { return pad + (x - minX) / (maxX - minX) * (w - pad * 2); }
+  function sy(y) { return h - pad - (y - minY) / (maxY - minY) * (h - pad * 2); }
+  ctx.clearRect(0, 0, w, h);
+  ctx.strokeStyle = "#003D5B";
+  ctx.beginPath();
+  ctx.moveTo(pad, pad); ctx.lineTo(pad, h - pad); ctx.lineTo(w - pad, h - pad);
+  ctx.stroke();
+  ctx.strokeStyle = "#3C6E71";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(sx(points[0][0]), sy(points[0][1]));
+  for (var i = 1; i < points.length; i++) ctx.lineTo(sx(points[i][0]), sy(points[i][1]));
+  ctx.stroke();
+  ctx.fillStyle = "#483C46";
+  ctx.font = "12px Tinos, serif";
+  ctx.fillText(String(minX), pad, h - pad + 15);
+  ctx.fillText(String(maxX), w - pad, h - pad + 15);
+  ctx.fillText(yPrefix + Math.round(minY).toLocaleString(), 2, h - pad - 5);
+  ctx.fillText(yPrefix + Math.round(maxY).toLocaleString(), 2, pad + 15);
+}
+
+
 // ---- ITEM COMPARISONS ----
 
 // Current approximate prices for the "what can you buy" feature.
@@ -245,6 +281,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Render any saved recent searches on page load
   renderRecentSearches();
+
+  // Draw inflation overview graph on home page
+  var graphSection = document.getElementById("graph");
+  if (graphSection && !document.getElementById("search")) {
+    loadCPIData().then(function (data) {
+      var canvas = document.createElement("canvas");
+      canvas.width = 400;
+      canvas.height = 250;
+      canvas.style.maxWidth = "100%";
+      var img = graphSection.querySelector("img");
+      if (img) graphSection.replaceChild(canvas, img);
+      var baseCPI = data["1913"];
+      var points = [];
+      for (var y = 1913; y <= 2025; y++) {
+        if (data[String(y)] !== undefined) {
+          points.push([y, Math.round((data[String(y)] - baseCPI) / baseCPI * 100)]);
+        }
+      }
+      drawLineGraph(canvas, points, "");
+    });
+  }
 
   if (!form) {
     return;

@@ -7,7 +7,7 @@
 // and item comparisons.
 // ============================================================
 
-import { getInflationAdjusted, getItemComparisons } from './inflation.js';
+import { getInflationAdjusted, getItemComparisons, loadCPIData, calculateInflation, drawLineGraph } from './inflation.js';
 
 document.addEventListener("DOMContentLoaded", function () {
   var params = new URLSearchParams(window.location.search);
@@ -31,6 +31,24 @@ document.addEventListener("DOMContentLoaded", function () {
       "$" + result.adjusted.toLocaleString();
     document.getElementById("display-multiplier").textContent =
       result.multiplier.toFixed(2) + "x";
+
+    // Draw growth graph
+    loadCPIData().then(function (data) {
+      var canvas = document.createElement("canvas");
+      canvas.width = 400;
+      canvas.height = 250;
+      canvas.style.maxWidth = "100%";
+      var graphSection = document.getElementById("graph");
+      var img = graphSection.querySelector("img");
+      if (img) graphSection.replaceChild(canvas, img);
+      var points = [];
+      for (var y = result.startYear; y <= result.endYear; y++) {
+        if (data[String(y)] !== undefined) {
+          points.push([y, Math.round(calculateInflation(amount, data[String(result.startYear)], data[String(y)]) * 100) / 100]);
+        }
+      }
+      drawLineGraph(canvas, points, "$");
+    });
 
     // Populate item comparisons
     var items = getItemComparisons(result.adjusted);
