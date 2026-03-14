@@ -226,8 +226,7 @@ export function renderRecentSearches() {
     // Click handler: save this search as currentResult and go to subpage
     (function (s) {
       div.addEventListener("click", function () {
-        localStorage.setItem("currentResult", JSON.stringify(s));
-        window.location.href = "subpage1.html";
+        window.location.href = "subpage1.html?startYear=" + s.startYear + "&amount=" + s.original + "&endYear=" + s.endYear;
       });
     })(search);
 
@@ -284,8 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
         renderRecentSearches();
 
         // Save full result for subpage display and redirect
-        localStorage.setItem("currentResult", JSON.stringify(result));
-        window.location.href = "subpage1.html";
+        window.location.href = "subpage1.html?startYear=" + result.startYear + "&amount=" + result.original + "&endYear=" + result.endYear;
       })
       .catch(function (err) {
         console.error("Inflation error:", err);
