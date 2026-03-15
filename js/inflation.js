@@ -100,33 +100,77 @@ export function getInflationAdjusted(amount, startYear, endYear) {
  * Draws a simple line graph on a canvas.
  * points = [[x, y], [x, y], ...]
  */
-export function drawLineGraph(canvas, points, yPrefix) {
+export function drawLineGraph(canvas, points, yPrefix, ySuffix) {
+  if (!ySuffix) ySuffix = "";
   var ctx = canvas.getContext("2d");
   var w = canvas.width, h = canvas.height;
-  var pad = 50;
+  var padLeft = 60, padRight = 20, padTop = 20, padBottom = 40;
   var minX = points[0][0], maxX = points[points.length - 1][0];
   var ys = points.map(function (p) { return p[1]; });
   var minY = Math.min.apply(null, ys), maxY = Math.max.apply(null, ys);
   if (maxY === minY) maxY = minY + 1;
-  function sx(x) { return pad + (x - minX) / (maxX - minX) * (w - pad * 2); }
-  function sy(y) { return h - pad - (y - minY) / (maxY - minY) * (h - pad * 2); }
+  function sx(x) { return padLeft + (x - minX) / (maxX - minX) * (w - padLeft - padRight); }
+  function sy(y) { return h - padBottom - (y - minY) / (maxY - minY) * (h - padTop - padBottom); }
   ctx.clearRect(0, 0, w, h);
+
+  // Draw axes
   ctx.strokeStyle = "#003D5B";
   ctx.beginPath();
-  ctx.moveTo(pad, pad); ctx.lineTo(pad, h - pad); ctx.lineTo(w - pad, h - pad);
+  ctx.moveTo(padLeft, padTop); ctx.lineTo(padLeft, h - padBottom); ctx.lineTo(w - padRight, h - padBottom);
   ctx.stroke();
+
+  // Draw line graph
   ctx.strokeStyle = "#3C6E71";
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(sx(points[0][0]), sy(points[0][1]));
   for (var i = 1; i < points.length; i++) ctx.lineTo(sx(points[i][0]), sy(points[i][1]));
   ctx.stroke();
+
+  // Axis tick helpers
   ctx.fillStyle = "#483C46";
-  ctx.font = "12px Tinos, serif";
-  ctx.fillText(String(minX), pad, h - pad + 15);
-  ctx.fillText(String(maxX), w - pad, h - pad + 15);
-  ctx.fillText(yPrefix + Math.round(minY).toLocaleString(), 2, h - pad - 5);
-  ctx.fillText(yPrefix + Math.round(maxY).toLocaleString(), 2, pad + 15);
+  ctx.font = "11px Tinos, serif";
+  ctx.strokeStyle = "#ccc";
+  ctx.lineWidth = 0.5;
+
+  // X-axis ticks (aim for ~5 ticks)
+  var xRange = maxX - minX;
+  var xStep = Math.ceil(xRange / 5 / 10) * 10; // round to nearest 10
+  if (xStep < 1) xStep = 1;
+  for (var xVal = Math.ceil(minX / xStep) * xStep; xVal <= maxX; xVal += xStep) {
+    var xPos = sx(xVal);
+    ctx.beginPath();
+    ctx.moveTo(xPos, h - padBottom);
+    ctx.lineTo(xPos, h - padBottom + 5);
+    ctx.stroke();
+    ctx.textAlign = "center";
+    ctx.fillText(String(xVal), xPos, h - padBottom + 16);
+  }
+
+  // Y-axis ticks (aim for ~5 ticks)
+  var yRange = maxY - minY;
+  var yMag = Math.pow(10, Math.floor(Math.log10(yRange)));
+  var yStep = yMag;
+  if (yRange / yStep < 3) yStep = yMag / 2;
+  if (yRange / yStep > 8) yStep = yMag * 2;
+  var yStart = Math.ceil(minY / yStep) * yStep;
+  for (var yVal = yStart; yVal <= maxY; yVal += yStep) {
+    var yPos = sy(yVal);
+    // Grid line
+    ctx.beginPath();
+    ctx.moveTo(padLeft, yPos);
+    ctx.lineTo(w - padRight, yPos);
+    ctx.stroke();
+    // Label
+    ctx.textAlign = "right";
+    var yLabel;
+    if (ySuffix === "%") {
+      yLabel = yVal.toFixed(1) + ySuffix;
+    } else {
+      yLabel = yPrefix + Math.round(yVal).toLocaleString() + ySuffix;
+    }
+    ctx.fillText(yLabel, padLeft - 5, yPos + 4);
+  }
 }
 
 
@@ -292,14 +336,16 @@ document.addEventListener("DOMContentLoaded", function () {
       canvas.style.maxWidth = "100%";
       var img = graphSection.querySelector("img");
       if (img) graphSection.replaceChild(canvas, img);
-      var baseCPI = data["1913"];
       var points = [];
-      for (var y = 1913; y <= 2025; y++) {
-        if (data[String(y)] !== undefined) {
-          points.push([y, Math.round((data[String(y)] - baseCPI) / baseCPI * 100)]);
+      for (var y = 1915; y <= 2025; y++) {
+        var curCPI = data[String(y)];
+        var prevCPI = data[String(y - 1)];
+        if (curCPI !== undefined && prevCPI !== undefined) {
+          var rate = ((curCPI - prevCPI) / prevCPI) * 100;
+          points.push([y, Math.round(rate * 10) / 10]);
         }
       }
-      drawLineGraph(canvas, points, "");
+      drawLineGraph(canvas, points, "", "%");
     });
   }
 
