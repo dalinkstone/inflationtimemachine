@@ -1,5 +1,6 @@
 body{
     font-family: var(--old-font-family);
+    margin: 0;
 }
 h1, h2, h3{
     font-family: var(--old-font-family);

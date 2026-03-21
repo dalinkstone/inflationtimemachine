@@ -315,6 +315,22 @@ export function renderRecentSearches() {
 }
 
 
+// ---- TOAST NOTIFICATION ----
+
+function showToast(message) {
+  var toast = document.getElementById("toast");
+  if (!toast) {
+    alert(message);
+    return;
+  }
+  toast.textContent = message;
+  toast.classList.add("show");
+  setTimeout(function () {
+    toast.classList.remove("show");
+  }, 3000);
+}
+
+
 // ---- FORM HANDLING ----
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -362,17 +378,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Basic validation
     if (!startYear || !amount || !endYear) {
-      alert("Please fill in all three fields.");
+      showToast("Please fill in all three fields.");
       return;
     }
 
     if (startYear < 1913 || endYear < 1913) {
-      alert("CPI data is only available from 1913 onward.");
+      showToast("CPI data is only available from 1913 onward.");
       return;
     }
 
     if (startYear >= endYear) {
-      alert("End year must be after the base year.");
+      showToast("End year must be after the base year.");
       return;
     }
 
@@ -390,7 +406,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch(function (err) {
         console.error("Inflation error:", err);
-        alert("Error: " + err.message);
+        showToast("Error: " + err.message);
       });
   });
 });

@@ -1,31 +1,110 @@
-header{
+header {
     height: 100px;
     max-width: 100%;
-    color: var(--primary);
     background-color: var(--primary);
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-
+    position: relative;
 }
-header img{
+
+header img {
     max-height: 75px;
     max-width: 75px;
     margin-left: 1.5rem;
     border-radius: 10px;
-   
 }
-header nav a{
-    padding-right: 2rem;
+
+#header-quote {
+    color: white;
+    text-align: center;
+    flex: 1;
+}
+
+/* Hide the checkbox */
+.nav-toggle {
+    display: none;
+}
+
+/* Hamburger icon - hidden on desktop */
+.nav-toggle-label {
+    display: none;
+    cursor: pointer;
+    padding: 1rem 2rem;
+}
+
+.nav-toggle-label span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-on-dark);
+    margin: 5px 0;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+/* Desktop nav - horizontal */
+header nav {
+    display: flex;
+}
+
+header nav a {
     text-decoration: none;
     color: var(--text-on-dark);
     font-size: 1.5rem;
-    padding-left: 2rem;
-    padding-top: 37px;
-    padding-bottom: 37px;
+    padding: 37px 2rem;
 }
-header nav a:hover{
+
+header nav a:hover {
     color: var(--text-on-color);
     background-color: var(--hover-1);
+}
+
+/* Mobile dropdown menu */
+@media (max-width: 600px) {
+    #header-quote {
+        display: none;
+    }
+
+    .nav-toggle-label {
+        display: block;
+    }
+
+    header nav {
+        position: absolute;
+        top: 100px;
+        right: 0;
+        background-color: var(--primary);
+        flex-direction: column;
+        width: 200px;
+        z-index: 100;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    }
+
+    header nav a {
+        padding: 1rem 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-toggle:checked ~ nav {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    /* Hamburger to X animation */
+    .nav-toggle:checked ~ .nav-toggle-label span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+
+    .nav-toggle:checked ~ .nav-toggle-label span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .nav-toggle:checked ~ .nav-toggle-label span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
 }

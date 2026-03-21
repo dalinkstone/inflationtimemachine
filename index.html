@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inflation Time Machine</title>
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/style.css" />
     <script type="module" src="js/inflation.js"></script>
@@ -11,16 +11,24 @@
 <body>
     <header>
         <a href="index.html"><img src="images/inflationtimemachine-logo.webp" alt="logo" fetchpriority="high"></a>
-	<div id="header-quote">
-		<p>"Inflation is taxation without legislation."
-— Milton Friedman</p>
-	</div>
-        <nav><a href="subpage1.html">Subpage</a></nav>
+        <div id="header-quote">
+            <p>"Inflation is taxation without legislation." — Milton Friedman</p>
+        </div>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle">
+        <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="subpage1.html">Results</a>
+        </nav>
     </header>
     <main>
         <section id="graph">
-            <h1>Graph</h1>
-            <img src="images/inflationtime-machine-logo.webp" alt="graph">
+            <h1>Annual Inflation Rate</h1>
+            <img src="images/inflationtime-machine-logo.webp" alt="Inflation rate graph">
         </section>
 
         <section id="form">
@@ -34,14 +42,14 @@
                     <label for="e_year"><h1>End Year</h1></label>
                     <input type="number" id="e_year" name="e_year"
 						min="1914" max="2025">
-                    <label for="submit"><h1></h1></label>
-                    <input id="submit" type="submit" value="submit">
-                    
+                    <input id="submit" type="submit" value="Submit">
+                    <input id="reset" type="reset" value="Reset">
             </form>
         </section>
 
         <section id="recent">
-            <h1>Recent</h1>
+            <h1>Recent Searches</h1>
+            <p class="section-subtitle">Your last lookups</p>
             <div class="lookUp">
                 <p>Year - 1900</p>
                 <p>Amount - $2000</p>
@@ -70,10 +78,11 @@
             </div>
         </div>
         <div id="bottomLevel">
-            <p>&copy 2026 inflation time machine. All rights reserved</p>
+            <p>&copy; 2026 Inflation Time Machine. All rights reserved.</p>
             <p>Privacy Policy</p>
-            <p>Teams of Service</p>
+            <p>Terms of Service</p>
         </div>
     </footer>
+    <div id="toast" class="toast"></div>
 </body>
 </html>
