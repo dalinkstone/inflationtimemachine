@@ -114,13 +114,13 @@ export function drawLineGraph(canvas, points, yPrefix, ySuffix) {
   ctx.clearRect(0, 0, w, h);
 
   // Draw axes
-  ctx.strokeStyle = "#003D5B";
+  ctx.strokeStyle = "#475569";
   ctx.beginPath();
   ctx.moveTo(padLeft, padTop); ctx.lineTo(padLeft, h - padBottom); ctx.lineTo(w - padRight, h - padBottom);
   ctx.stroke();
 
   // Draw line graph
-  ctx.strokeStyle = "#3C6E71";
+  ctx.strokeStyle = "#d97706";
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(sx(points[0][0]), sy(points[0][1]));
@@ -128,9 +128,9 @@ export function drawLineGraph(canvas, points, yPrefix, ySuffix) {
   ctx.stroke();
 
   // Axis tick helpers
-  ctx.fillStyle = "#483C46";
-  ctx.font = "11px Tinos, serif";
-  ctx.strokeStyle = "#ccc";
+  ctx.fillStyle = "#94a3b8";
+  ctx.font = "11px Inter, sans-serif";
+  ctx.strokeStyle = "#334155";
   ctx.lineWidth = 0.5;
 
   // X-axis ticks (aim for ~5 ticks)
@@ -263,8 +263,10 @@ export function renderRecentSearches() {
 
   // Keep the h1, remove everything else
   var heading = recentSection.querySelector("h1");
+  var subtitle = recentSection.querySelector(".section-subtitle");
   recentSection.innerHTML = "";
   recentSection.appendChild(heading);
+  if (subtitle) recentSection.appendChild(subtitle);
 
   var searches = loadRecentSearches();
 
@@ -306,7 +308,7 @@ export function renderRecentSearches() {
     // Click handler: save this search as currentResult and go to subpage
     (function (s) {
       div.addEventListener("click", function () {
-        window.location.href = "subpage1.html?startYear=" + s.startYear + "&amount=" + s.original + "&endYear=" + s.endYear;
+        window.location.href = "results.html?startYear=" + s.startYear + "&amount=" + s.original + "&endYear=" + s.endYear;
       });
     })(search);
 
@@ -402,7 +404,7 @@ document.addEventListener("DOMContentLoaded", function () {
         renderRecentSearches();
 
         // Save full result for subpage display and redirect
-        window.location.href = "subpage1.html?startYear=" + result.startYear + "&amount=" + result.original + "&endYear=" + result.endYear;
+        window.location.href = "results.html?startYear=" + result.startYear + "&amount=" + result.original + "&endYear=" + result.endYear;
       })
       .catch(function (err) {
         console.error("Inflation error:", err);

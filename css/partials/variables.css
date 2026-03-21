@@ -1,13 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Quintessential&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');:root{
-    --primary: #003D5B;
-    --secondary: #214F4B;
-    --text-on-color: #483C46;
-    --text-on-dark: #A6A2A2;
-    --hover-1: #566246;
-    --hover-2: #3C6E71;
-    
-    --old-font-family: "Quintessential", serif;
-    --new-font-family: "Tinos", serif;
-    
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;700&display=swap');
 
+:root {
+    --bg-primary: #0f172a;
+    --bg-card: #1e293b;
+    --bg-input: #0f172a;
+    --accent: #d97706;
+    --accent-hover: #f59e0b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    --heading-font: "Playfair Display", serif;
+    --body-font: "Inter", sans-serif;
 }

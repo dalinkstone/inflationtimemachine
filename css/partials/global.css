@@ -1,13 +1,28 @@
-body{
-    font-family: var(--old-font-family);
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--body-font);
     margin: 0;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    background-image: radial-gradient(ellipse at 50% 0%, rgba(217, 119, 6, 0.06) 0%, transparent 50%);
+    min-height: 100vh;
 }
-h1, h2, h3{
-    font-family: var(--old-font-family);
+
+h1, h2, h3 {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    color: var(--text-primary);
 }
-p{
-    font-family: var(--new-font-family);
+
+p {
+    font-family: var(--body-font);
+    color: var(--text-secondary);
 }
-img{
+
+img {
     max-width: 100%;
 }

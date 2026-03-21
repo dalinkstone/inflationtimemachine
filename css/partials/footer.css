@@ -1,15 +1,27 @@
+footer {
+    border-top: 1px solid var(--border-color);
+    margin-top: 40px;
+}
+
 footer img {
-    max-width: 75px;
+    max-width: 50px;
+    border-radius: 8px;
     margin-left: 2rem;
-    border-radius: 10px;
 }
 
 .social a img {
-    max-width: 40px;
-    max-height: 40px;
+    max-width: 28px;
+    max-height: 28px;
     border-radius: 0;
-    margin-left: 1rem;
-    width: 35px;
+    margin-left: 0.75rem;
+    width: 28px;
+    filter: brightness(0) invert(1);
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.social a:hover img {
+    opacity: 0.9;
 }
 
 .social {
@@ -24,38 +36,45 @@ footer img {
     align-self: center;
     text-align: center;
     text-decoration: none;
-    color: var(--text-on-dark);
-    font-size: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+#topLevel a:hover {
+    color: var(--text-primary);
 }
 
 #topLevel {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
-    background-color: var(--primary);
-    height: 100px;
+    background-color: transparent;
+    height: 80px;
     align-items: center;
 }
 
 #bottomLevel {
     margin: 0;
-    background-color: #507173;
+    background-color: rgba(0, 0, 0, 0.2);
     justify-content: space-around;
     display: flex;
     padding: 10px;
-    color: white;
+    color: var(--text-secondary);
 }
 
 #bottomLevel p {
     margin: 0;
-    padding: 20px;
+    padding: 16px;
+    font-size: 0.8rem;
 }
 
 @media (max-width: 600px) {
     #topLevel {
         grid-template-columns: 1fr;
         height: auto;
-        padding: 15px 0;
+        padding: 20px 0;
         text-align: center;
     }
 
@@ -73,6 +92,6 @@ footer img {
     }
 
     #bottomLevel p {
-        padding: 5px;
+        padding: 4px;
     }
 }
