@@ -344,6 +344,97 @@ document.addEventListener("DOMContentLoaded", function () {
   // Render any saved recent searches on page load
   renderRecentSearches();
 
+  // ---- Logo flip animation on every query ----
+  var logoImg = document.querySelector("header img");
+
+  function spinLogo() {
+    if (!logoImg) return;
+    logoImg.classList.remove("logo-spin");
+    // Force reflow so removing + re-adding the class triggers animation again
+    void logoImg.offsetWidth;
+    logoImg.classList.add("logo-spin");
+  }
+
+  if (logoImg) {
+    logoImg.addEventListener("animationend", function () {
+      logoImg.classList.remove("logo-spin");
+    });
+  }
+
+  // ---- Inline field validation ----
+
+  function showFieldError(input, errorId, message) {
+    var errorEl = document.getElementById(errorId);
+    if (errorEl) errorEl.textContent = message;
+    input.classList.add("invalid");
+  }
+
+  function clearFieldError(input, errorId) {
+    var errorEl = document.getElementById(errorId);
+    if (errorEl) errorEl.textContent = "";
+    input.classList.remove("invalid");
+  }
+
+  function validateBaseYear() {
+    var val = bYearInput.value.trim();
+    if (val === "") { clearFieldError(bYearInput, "b_year-error"); return; }
+    var year = parseInt(val);
+    if (isNaN(year) || year < 1913 || year > 2024) {
+      showFieldError(bYearInput, "b_year-error", "Year must be between 1913 and 2024.");
+    } else {
+      clearFieldError(bYearInput, "b_year-error");
+    }
+  }
+
+  function validateAmount() {
+    var val = amountInput.value.trim();
+    if (val === "") { clearFieldError(amountInput, "amount-error"); return; }
+    var amount = parseFloat(val);
+    if (isNaN(amount) || amount <= 0) {
+      showFieldError(amountInput, "amount-error", "Amount must be greater than zero.");
+    } else {
+      clearFieldError(amountInput, "amount-error");
+    }
+  }
+
+  function validateEndYear() {
+    var val = eYearInput.value.trim();
+    if (val === "") { clearFieldError(eYearInput, "e_year-error"); return; }
+    var year = parseInt(val);
+    if (isNaN(year) || year < 1913 || year > 2025) {
+      showFieldError(eYearInput, "e_year-error", "Year must be between 1913 and 2025.");
+    } else {
+      var startVal = bYearInput.value.trim();
+      if (startVal !== "" && year <= parseInt(startVal)) {
+        showFieldError(eYearInput, "e_year-error", "End year must be after the base year.");
+      } else {
+        clearFieldError(eYearInput, "e_year-error");
+      }
+    }
+  }
+
+  // Show errors on blur (click outside) or after 1 second of no typing.
+  // If a field already has an error and the user fixes it, clear immediately.
+  function setupFieldValidation(input, validateFn) {
+    var timer = null;
+    input.addEventListener("input", function () {
+      if (timer) clearTimeout(timer);
+      if (input.classList.contains("invalid")) {
+        validateFn();
+      } else {
+        timer = setTimeout(validateFn, 1000);
+      }
+    });
+    input.addEventListener("blur", function () {
+      if (timer) clearTimeout(timer);
+      validateFn();
+    });
+  }
+
+  if (bYearInput) setupFieldValidation(bYearInput, validateBaseYear);
+  if (amountInput) setupFieldValidation(amountInput, validateAmount);
+  if (eYearInput) setupFieldValidation(eYearInput, validateEndYear);
+
   // Draw inflation overview graph on home page
   var graphSection = document.getElementById("graph");
   if (graphSection && !document.getElementById("search")) {
@@ -371,44 +462,74 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
+  // Clear all errors on form reset
+  form.addEventListener("reset", function () {
+    clearFieldError(bYearInput, "b_year-error");
+    clearFieldError(amountInput, "amount-error");
+    clearFieldError(eYearInput, "e_year-error");
+  });
+
   form.addEventListener("submit", function (event) {
     event.preventDefault();
 
     var startYear = parseInt(bYearInput.value);
     var amount = parseFloat(amountInput.value);
     var endYear = parseInt(eYearInput.value);
+    var valid = true;
 
-    // Basic validation
-    if (!startYear || !amount || !endYear) {
-      showToast("Please fill in all three fields.");
-      return;
+    // Validate all fields with inline errors
+    if (!bYearInput.value.trim() || isNaN(startYear)) {
+      showFieldError(bYearInput, "b_year-error", "Please enter a base year.");
+      valid = false;
+    } else if (startYear < 1913 || startYear > 2024) {
+      showFieldError(bYearInput, "b_year-error", "Year must be between 1913 and 2024.");
+      valid = false;
+    } else {
+      clearFieldError(bYearInput, "b_year-error");
     }
 
-    if (startYear < 1913 || endYear < 1913) {
-      showToast("CPI data is only available from 1913 onward.");
-      return;
+    if (!amountInput.value.trim() || isNaN(amount) || amount <= 0) {
+      showFieldError(amountInput, "amount-error", "Please enter a valid amount.");
+      valid = false;
+    } else {
+      clearFieldError(amountInput, "amount-error");
     }
 
-    if (startYear >= endYear) {
-      showToast("End year must be after the base year.");
-      return;
+    if (!eYearInput.value.trim() || isNaN(endYear)) {
+      showFieldError(eYearInput, "e_year-error", "Please enter an end year.");
+      valid = false;
+    } else if (endYear < 1913 || endYear > 2025) {
+      showFieldError(eYearInput, "e_year-error", "Year must be between 1913 and 2025.");
+      valid = false;
+    } else if (startYear >= endYear) {
+      showFieldError(eYearInput, "e_year-error", "End year must be after the base year.");
+      valid = false;
+    } else {
+      clearFieldError(eYearInput, "e_year-error");
     }
+
+    if (!valid) return;
+
+    // Valid — spin the logo and disable submit during animation
+    spinLogo();
+    var submitBtn = document.getElementById("submit");
+    if (submitBtn) submitBtn.disabled = true;
 
     // Calculate inflation
     getInflationAdjusted(amount, startYear, endYear)
       .then(function (result) {
-        console.log("Result:", result);
-
-        // Save to localStorage and re-render recent section
         saveSearch(result);
         renderRecentSearches();
 
-        // Save full result for subpage display and redirect
-        window.location.href = "results.html?startYear=" + result.startYear + "&amount=" + result.original + "&endYear=" + result.endYear;
+        // Wait for the logo animation to finish before redirecting
+        setTimeout(function () {
+          window.location.href = "results.html?startYear=" + result.startYear + "&amount=" + result.original + "&endYear=" + result.endYear;
+        }, 3000);
       })
       .catch(function (err) {
         console.error("Inflation error:", err);
         showToast("Error: " + err.message);
+        if (submitBtn) submitBtn.disabled = false;
       });
   });
 });

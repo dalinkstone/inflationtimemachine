@@ -90,6 +90,23 @@ input[type="number"]:focus {
     border-color: var(--accent);
 }
 
+input[type="number"].invalid {
+    border-color: #c0392b;
+}
+
+input[type="number"].invalid:focus {
+    border-color: #c0392b;
+}
+
+.field-error {
+    display: block;
+    font-size: 0.75rem;
+    color: #c0392b;
+    font-family: var(--body-font);
+    min-height: 0;
+    margin: 0 0 4px 0;
+}
+
 .form-actions {
     display: flex;
     gap: 12px;
@@ -112,6 +129,11 @@ input[type="number"]:focus {
 
 #submit:hover {
     background-color: var(--accent-hover);
+}
+
+#submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 #reset {

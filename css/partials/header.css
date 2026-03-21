@@ -29,6 +29,18 @@ header img {
     border-radius: 8px;
 }
 
+@keyframes logoFlip {
+    0%   { transform: rotate(0deg); }
+    25%  { transform: rotate(180deg); }
+    50%  { transform: rotate(360deg); }
+    75%  { transform: rotate(540deg); }
+    100% { transform: rotate(720deg); }
+}
+
+header img.logo-spin {
+    animation: logoFlip 3s ease-in-out;
+}
+
 #header-quote {
     text-align: center;
     flex: 1;
