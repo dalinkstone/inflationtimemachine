@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0f172a">
+    <meta name="theme-color" content="#121316">
     <title>Inflation Time Machine - Results</title>
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -24,27 +24,37 @@
         </nav>
     </header>
     <main>
-        <section id="graph">
-            <h1>Dollar Value Growth</h1>
-            <img src="images/inflationtimemachine-logo.webp" alt="Dollar value growth graph">
-        </section>
-
-        <section id="search">
-            <h1>Base Year</h1>
-            <p id="display-start-year">—</p>
-            <h1>Amount</h1>
-            <p id="display-amount">—</p>
-            <h1>End Year</h1>
-            <p id="display-end-year">—</p>
-        </section>
-
-        <section id="end">
-            <h1>End Amount</h1>
-            <p id="display-adjusted">—</p>
-            <h1>Multiplier</h1>
-            <p id="display-multiplier">—</p>
-            <details class="times" name="items">
-                <summary>What can it buy?</summary>
+        <section id="results-panel">
+            <div id="graph">
+                <h1>Dollar Value Growth</h1>
+                <img src="images/inflationtimemachine-logo.webp" alt="Dollar value growth graph">
+            </div>
+            <div class="result-row" id="search">
+                <div class="data-point">
+                    <h1>Base Year</h1>
+                    <p id="display-start-year">—</p>
+                </div>
+                <div class="data-point">
+                    <h1>Amount</h1>
+                    <p id="display-amount">—</p>
+                </div>
+                <div class="data-point">
+                    <h1>End Year</h1>
+                    <p id="display-end-year">—</p>
+                </div>
+            </div>
+            <div class="result-row result-highlight" id="end">
+                <div class="data-point">
+                    <h1>End Amount</h1>
+                    <p id="display-adjusted">—</p>
+                </div>
+                <div class="data-point">
+                    <h1>Multiplier</h1>
+                    <p id="display-multiplier">—</p>
+                </div>
+            </div>
+            <details class="buy-section" name="items">
+                <summary>What can you buy with this?</summary>
                 <ul class="itemList" id="display-items">
                 </ul>
             </details>

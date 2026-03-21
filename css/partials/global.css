@@ -8,7 +8,6 @@ body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
-    background-image: radial-gradient(ellipse at 50% 0%, rgba(217, 119, 6, 0.06) 0%, transparent 50%);
     min-height: 100vh;
 }
 

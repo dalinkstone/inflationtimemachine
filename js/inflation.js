@@ -114,13 +114,13 @@ export function drawLineGraph(canvas, points, yPrefix, ySuffix) {
   ctx.clearRect(0, 0, w, h);
 
   // Draw axes
-  ctx.strokeStyle = "#475569";
+  ctx.strokeStyle = "#3d3f44";
   ctx.beginPath();
   ctx.moveTo(padLeft, padTop); ctx.lineTo(padLeft, h - padBottom); ctx.lineTo(w - padRight, h - padBottom);
   ctx.stroke();
 
   // Draw line graph
-  ctx.strokeStyle = "#d97706";
+  ctx.strokeStyle = "#d49040";
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(sx(points[0][0]), sy(points[0][1]));
@@ -128,9 +128,9 @@ export function drawLineGraph(canvas, points, yPrefix, ySuffix) {
   ctx.stroke();
 
   // Axis tick helpers
-  ctx.fillStyle = "#94a3b8";
+  ctx.fillStyle = "#807b74";
   ctx.font = "11px Inter, sans-serif";
-  ctx.strokeStyle = "#334155";
+  ctx.strokeStyle = "#2a2d33";
   ctx.lineWidth = 0.5;
 
   // X-axis ticks (aim for ~5 ticks)
