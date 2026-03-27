@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var endYear = parseInt(params.get("endYear"));
 
   if (!startYear || !amount || !endYear) {
+    alert("No data to display. Please go back to the home page and enter your information.");
+    window.location.href = "index.html";
     return;
   }
 

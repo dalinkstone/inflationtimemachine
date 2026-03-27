@@ -223,7 +223,7 @@ input[type="number"].invalid:focus {
 
 .data-point p {
     font-size: 1.1rem;
-    color: var(--text-primary);
+    color: var(--accent);
     margin: 0;
     font-family: var(--body-font);
 }
